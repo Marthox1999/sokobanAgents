@@ -28,7 +28,17 @@ def searchMap():
     for i in range (len(map)):
         print(map[i])
 
-    print("player position", playerPosition)
-    print("boxes in map", boxes)
+    for i in range (len(boxes)):
+        for j in range (len(boxes[i])):
+            try:
+                boxes[i][j] = int(boxes[i][j])
+            except ValueError:
+                return -1
+
+    for i in range (len(playerPosition)):
+        try:
+            playerPosition[i] = int(playerPosition[i])
+        except ValueError:
+            return -1
 
     return map, playerPosition, boxes

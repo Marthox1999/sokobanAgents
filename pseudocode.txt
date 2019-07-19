@@ -1,0 +1,38 @@
+###############################################################################
+###############################################################################
+
+Breadth first search
+
+https://www.programiz.com/dsa/graph-bfs
+
+create a queue Q
+mark v as visited and put v into Q
+while Q is non-empty
+    remove the head u of Q
+    mark and enqueue all (unvisited) neighbours of u
+
+###############################################################################
+###############################################################################
+
+Depth first search
+
+
+https://en.wikipedia.org/wiki/Depth-first_search
+https://www.programiz.com/dsa/graph-dfs
+
+(recursive)
+procedure DFS(G,v):
+      label v as discovered
+      for all directed edges from v to w that are in G.adjacentEdges(v) do
+          if vertex w is not labeled as discovered then
+              recursively call DFS(G,w)
+(iterative)
+procedure DFS-iterative(G,v):
+    let S be a stack
+    S.push(v)
+    while S is not empty
+        v = S.pop()
+        if v is not labeled as discovered:
+            label v as discovered
+            for all edges from v to w in G.adjacentEdges(v) do
+                S.push(w)

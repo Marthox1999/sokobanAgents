@@ -1,3 +1,5 @@
+import copy
+
 class Node:
     def __init__(self, playerPosition, boxesPositions, father, decision):
         self.playerPosition = playerPosition
@@ -5,34 +7,36 @@ class Node:
         self.father = father
         self.decision = decision
 
-    def moveLeft(self, map):
-        leftPosition = self.playerPosition
-        leftPosition[1] = leftPosition[1] - 1
-        if map[leftPosition].lower() == 'w':
-            return False
-        return True
+    def expandNode(self, map):
+        playerPosition = copy.deepcopy(self.playerPosition)
+        boxesPositions = copy.deepcopy(self.boxesPositions)
 
-    def moveRight(self, map):
-        rightPosition = self.playerPosition
-        rightPosition[1] = rightPosition[1] + 1
-        if map[rightPosition].lower() == 'w':
-            return False
-        return True
+        moves = [[-1, 0], [0, 1], [1, 0], [0, -1]]
+        posibleStates = []
 
-    def moveUp(self, map):
-        upPosition = self.playerPosition
-        upPosition[0] = upPosition[0] - 1
-        if map[upPosition].lower() == 'w':
-            return False
-        return True
+        for move in moves:
+            newBoxesPositions = boxesPositions[:]
+            newPosition = [playerPosition[0] + move[0], playerPosition[1] + move[1]]
 
-    def moveDown(self, map):
-        downPosition = self.playerPosition
-        downPosition[0] = downPosition[0] +1
-        if map[downPosition].lower() == 'w':
-            return False
-        return True
-        
+            if map[newPosition[0]][newPosition[1]].lower() == 'w':
+                continue
+
+            for index, box in enumerate(boxesPositions):
+                if newPosition == box:
+                    newBoxPosition = [box[0] + move[0], box[1] + move[1]]
+                    if map[newBoxPosition[0]][newBoxPosition[1]].lower() == 'w':
+                        continue
+                    if newBoxPosition in boxesPositions:
+                        continue
+                    newBoxesPositions[index] = newBoxPosition
+
+            print("newPosition:", newPosition, " newBoxPosition:", newBoxesPositions)
+            newMoveNode = Node(newPosition, newBoxesPositions, self, move)
+            posibleStates.append(newMoveNode)
+            
+        return posibleStates
+
+
     def victory(self, map):
         for box in self.boxesPositions:
             if map[box] == 'x':
