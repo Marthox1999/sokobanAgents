@@ -33,9 +33,23 @@ class Node:
             print("newPosition:", newPosition, " newBoxPosition:", newBoxesPositions)
             newMoveNode = Node(newPosition, newBoxesPositions, self, move)
             posibleStates.append(newMoveNode)
-            
+
         return posibleStates
 
+    def findPath(self):
+        path = []
+        fatherNode = self.father
+        while fatherNode != None:
+            path.append(fatherNode.decision)
+            fatherNode = fatherNode.father
+        return path
+
+    def findCicle(self):
+        fatherNote = self.father
+        while (fatherNode != None and
+                fatherNode.playerPosition != self.playerPosition and
+                fatherNode.boxesPositions != self.boxesPositions):
+                fatherNode = fatherNode.father
 
     def victory(self, map):
         for box in self.boxesPositions:

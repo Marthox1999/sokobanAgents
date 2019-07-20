@@ -28,4 +28,4 @@ if __name__ == '__main__':
         print("posicion del jugador en el nodo: ", nodo.playerPosition)
         print("posicion de las cajas en el nodo: ", nodo.boxesPositions)
 
-    return 0
+    
