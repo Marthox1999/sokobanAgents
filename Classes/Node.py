@@ -15,6 +15,7 @@ class Node:
         posibleStates = []
 
         for move in moves:
+            canMove = True
             newBoxesPositions = boxesPositions[:]
             newPosition = [playerPosition[0] + move[0], playerPosition[1] + move[1]]
 
@@ -25,19 +26,25 @@ class Node:
                 if newPosition == box:
                     newBoxPosition = [box[0] + move[0], box[1] + move[1]]
                     if map[newBoxPosition[0]][newBoxPosition[1]].lower() == 'w':
-                        continue
-                    if newBoxPosition in boxesPositions:
-                        continue
-                    newBoxesPositions[index] = newBoxPosition
+                        canMove = False
+                    if newBoxPosition in newBoxesPositions:
+                        canMove = False
+
+                    del newBoxesPositions[index]
+                    newBoxesPositions.insert(index, newBoxPosition)
 
             newMoveNode = Node(newPosition, newBoxesPositions, self, move)
+
             if (newMoveNode.findCicle()):
+                continue
+            if(canMove == False):
                 continue
             else:
                 posibleStates.append(newMoveNode)
+
         return posibleStates
 
-    def findPath(self):
+    def findPath(self, map):
         moves = [[-1, 0], [0, 1], [1, 0], [0, -1]]
         path = []
         movePath = []
@@ -46,15 +53,14 @@ class Node:
             path.append(actual.decision)
             actual = actual.father
         for decision in reversed(path):
-            if(decision==[-1, 0]):
-                move="Up"
-            if(decision==[0, 1]):
-                move="Right"
-            if(decision==[1, 0]):
-                move="Down"
-            if(decision==[0, -1]):
-                move="Left"
-            movePath.append(move)
+            if decision == [-1,0]:
+                movePath.append('Arriba')
+            if decision == [0, 1]:
+                movePath.append('Derecha')
+            if decision == [1, 0]:
+                movePath.append('Abajo')
+            if decision == [0, -1]:
+                movePath.append('Izquierda')
         return movePath
 
     def findCicle(self):
@@ -70,6 +76,7 @@ class Node:
 
     def victory(self, map):
         for box in self.boxesPositions:
-            if map[box[0]][box[1]].lower() == 'x':
-                return True
-            return False
+            if map[box[0]][box[1]].lower() != 'x':
+                return False
+        print("posicinoes de las cajas",self.boxesPositions)
+        return True

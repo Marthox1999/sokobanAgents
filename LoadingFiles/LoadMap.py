@@ -9,7 +9,10 @@ def searchMap():
     boxes = []
     sokobanMap = open(fileName,"r")
     map = sokobanMap.readlines()
-    map.remove('\n')
+    try:
+        map.remove('\n')
+    except:
+        0
 
     for i in range (0, len(map)):
         map[i]= map[i].replace('\n', '')

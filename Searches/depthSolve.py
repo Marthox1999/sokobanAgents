@@ -11,13 +11,14 @@ def depthSolveRecursive(map, nodes):
 def depthSolveIterative(map, node):
     nodes = [node]
     while(len(nodes)):
-        print("\n")
         for index, node in enumerate(nodes):
             if node.victory(map):
-                print("Gane")
-                return node.findPath()
+                print("Gane", node.victory(map))
+                print("Player:", node.playerPosition, "Boxes", node.boxesPositions)
+                return node.findPath(map)
+            ("Player:", node.playerPosition, "Boxes", node.boxesPositions)
             newnodes = node.expandNode(map)
             del nodes[index]
             for index, nodo in enumerate(newnodes):
                 nodes.insert(index, nodo)
-            print("Player: ",node.playerPosition,"Boxes: ", node.boxesPositions)
+    print("El nivel no tiene solucion")
