@@ -1,4 +1,7 @@
 from Classes.Node import Node
 
-def breadthSolve(map, playerPosition, boxes):
-    return 0
+def breadthSolveIterative(map, nodes):
+    for node in nodes:
+        if node.victory:
+            return node.findPath
+        nodes.append(node.expandNode(map))

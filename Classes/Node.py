@@ -30,29 +30,46 @@ class Node:
                         continue
                     newBoxesPositions[index] = newBoxPosition
 
-            print("newPosition:", newPosition, " newBoxPosition:", newBoxesPositions)
             newMoveNode = Node(newPosition, newBoxesPositions, self, move)
-            posibleStates.append(newMoveNode)
-
+            if (newMoveNode.findCicle()):
+                continue
+            else:
+                posibleStates.append(newMoveNode)
         return posibleStates
 
     def findPath(self):
+        moves = [[-1, 0], [0, 1], [1, 0], [0, -1]]
         path = []
-        fatherNode = self.father
-        while fatherNode != None:
-            path.append(fatherNode.decision)
-            fatherNode = fatherNode.father
-        return path
+        movePath = []
+        actual = self
+        while (actual.father != None):
+            path.append(actual.decision)
+            actual = actual.father
+        for decision in reversed(path):
+            if(decision==[-1, 0]):
+                move="Up"
+            if(decision==[0, 1]):
+                move="Right"
+            if(decision==[1, 0]):
+                move="Down"
+            if(decision==[0, -1]):
+                move="Left"
+            movePath.append(move)
+        return movePath
 
     def findCicle(self):
-        fatherNote = self.father
-        while (fatherNode != None and
-                fatherNode.playerPosition != self.playerPosition and
-                fatherNode.boxesPositions != self.boxesPositions):
+        actual = self
+        fatherNode = self.father
+        while (fatherNode != None):
+            if(fatherNode.playerPosition == actual.playerPosition and
+                fatherNode.boxesPositions == actual.boxesPositions):
+                return True
+            else:
                 fatherNode = fatherNode.father
+        return False
 
     def victory(self, map):
         for box in self.boxesPositions:
-            if map[box] == 'x':
+            if map[box[0]][box[1]].lower() == 'x':
                 return True
             return False
