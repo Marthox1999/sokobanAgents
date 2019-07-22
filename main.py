@@ -17,32 +17,27 @@ if __name__ == '__main__':
     try:
         level = sys.argv[1]
         print(level)
-        busqueda = int(sys.argv[2])
-        print(busqueda)
     except:
-        sys.exit("por favor ingrese el path del nivel y el tipo de busqueda")
+        sys.exit("por favor ingrese el correcto path de un nivel")
 
     map, playerPosition, boxes = searchMap(level)
-    print("El estado inicial es:")
-    print("Player:", playerPosition, "Boxes", boxes)
 
     node = Node(playerPosition, boxes, None, None)
 
-    if (busqueda == 1):
-        solution = depthSolveIterative(map, node)
-        solutionString = ""
-        for decision in solution:
-            solutionString = solutionString + decision
-        print (solutionString)
-    elif(busqueda == 2):
-        solution = breadthSolveIterative(map, node)
-        solutionString = ""
-        for decision in solution:
-            solutionString = solutionString + decision
-        print (solutionString)
-    elif(busqueda == 3):
-        solution = iterativeDepthSolveIterative(map, node)
-        solutionString = ""
-        for decision in solution:
-            solutionString = solutionString + decision
-        print (solutionString)
+    solution = depthSolveIterative(map, node)
+    solutionString = ""
+    for decision in solution:
+        solutionString = solutionString + decision
+    print (solutionString)
+
+    solution = breadthSolveIterative(map, node)
+    solutionString = ""
+    for decision in solution:
+        solutionString = solutionString + decision
+    print (solutionString)
+    
+    solution = iterativeDepthSolveIterative(map, node)
+    solutionString = ""
+    for decision in solution:
+        solutionString = solutionString + decision
+    print (solutionString)

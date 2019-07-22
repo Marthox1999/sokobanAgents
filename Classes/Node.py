@@ -11,7 +11,7 @@ class Node:
         playerPosition = copy.deepcopy(self.playerPosition)
         boxesPositions = copy.deepcopy(self.boxesPositions)
 
-        moves = [[-1, 0], [0, 1], [1, 0], [0, -1]]
+        moves = [[-1, 0], [1, 0], [0, -1], [0, 1]]
         corners = [
                     [[-1, 0], [0, 1]],
                     [[1, 0], [0, 1]],
