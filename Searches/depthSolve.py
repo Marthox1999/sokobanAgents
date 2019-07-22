@@ -1,5 +1,4 @@
 from Classes.Node import Node
-import time
 
 def depthSolveRecursive(map, nodes):
     for node in nodes:

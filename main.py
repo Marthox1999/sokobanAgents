@@ -17,8 +17,13 @@ if __name__ == '__main__':
     print("player position", playerPosition)
     print("boxes in map", boxes)
     print("1 - profunidad \n 2 - amplitud \n 3 - profunidad iterativa")
-    #busqueda = int(input("por favor ingrese que tipo de busqueda desea hacer:"))
+    busqueda = int(input("por favor ingrese que tipo de busqueda desea hacer:"))
 
     node = Node(playerPosition, boxes, None, None)
 
-    print(depthSolveIterative(map, node))
+    if (busqueda == 1):
+        print(depthSolveIterative(map, node))
+    elif(busqueda == 2):
+        print(breadthSolveIterative(map, node))
+    elif(busqueda == 3):
+        print('Todavia no he implementado esto :v')
