@@ -1,15 +1,18 @@
 import copy
 
 class Node:
-    def __init__(self, playerPosition, boxesPositions, father, decision):
+    def __init__(self, playerPosition, boxesPositions, father, decision, depth):
         self.playerPosition = playerPosition
         self.boxesPositions = boxesPositions
         self.father = father
         self.decision = decision
+        self.depth = depth
 
     def expandNode(self, map):
         playerPosition = copy.deepcopy(self.playerPosition)
         boxesPositions = copy.deepcopy(self.boxesPositions)
+        actualDepth = copy.deepcopy(self.depth)
+        depth = actualDepth + 1
 
         moves = [[-1, 0], [1, 0], [0, -1], [0, 1]]
         corners = [
@@ -40,6 +43,7 @@ class Node:
                         continue
                     #Check if the box will be stucked in a corner and, if that corner isnt a global
                     #didnt expand the node
+
                     if map[newPosition[0]][newPosition[1]].lower() != 'x':
                         for corner in corners:
                             cornerBox_1 = [newBoxPosition[0] + corner[0][0], newBoxPosition[1] + corner[0][1]]
@@ -47,10 +51,11 @@ class Node:
                             if map[cornerBox_1[0]][cornerBox_1[1]].lower() == 'w' and map[cornerBox_2[0]][cornerBox_2[1]].lower() == 'w':
                                 canMove = False
                                 continue
+
                     del newBoxesPositions[index]
                     newBoxesPositions.insert(index, newBoxPosition)
 
-            newMoveNode = Node(newPosition, newBoxesPositions, self, move)
+            newMoveNode = Node(newPosition, newBoxesPositions, self, move, depth)
 
             if (newMoveNode.findCicle()):
                 continue
@@ -90,14 +95,6 @@ class Node:
             else:
                 fatherNode = fatherNode.father
         return False
-
-    def findDepth(self):
-        depth = 0
-        fatherNode = self.father
-        while (fatherNode != None):
-            depth = depth + 1
-            fatherNode = fatherNode.father
-        return depth
 
     def victory(self, map):
         for box in self.boxesPositions:

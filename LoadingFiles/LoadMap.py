@@ -1,9 +1,16 @@
+import sys
 
-def searchMap(fileName):
+
+def searchMap():
 
     boxes = []
-    sokobanMap = open(fileName,"r")
-    map = sokobanMap.readlines()
+    map = []
+    for line in sys.stdin:
+        stripped = line.strip()
+        if not stripped:
+            break
+        map.append(stripped)
+    
     try:
         map.remove('\n')
     except:

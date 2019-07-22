@@ -23,22 +23,17 @@ def iterativeDepthSolveRecursive(map, nodes, depth):
             nodes.insert(index, nodo)
         iterativeDepthSolveRecursive(map, nodes)
 
-def iterativeDepthSolveIterative(map, node):
-    nodes = [node]
-    i = 0
-    while (len(nodes)):
-        i = i+1
-        continueIteration = False
-        while(len(nodes) or continueIteration):
-            for index, node in enumerate(nodes):
-                if (node.findDepth() > i):
-                    continueIteration = True
-                if node.victory(map):
-                    print("El estado ganador es:")
-                    print("Player:", node.playerPosition, "Boxes", node.boxesPositions)
-                    return node.findPath(map)
-                newnodes = node.expandNode(map)
-                del nodes[index]
+def iterativeDepthSolveIterative(map, node, Max_tree_depth):
+    initNode = node
+    for i in range (Max_tree_depth + 1):
+        nodes = [node]
+        while(nodes):
+            nodo = nodes[0]
+            del nodes[0]
+            if nodo.victory(map):
+                return nodo.findPath(map)
+            if(nodo.depth < i):
+                newnodes = nodo.expandNode(map)
                 for index, nodo in enumerate(newnodes):
                     nodes.insert(index, nodo)
     print("El nivel no tiene solucion")

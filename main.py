@@ -6,7 +6,6 @@ Valeria Rivera Muñoz; Codigo 1626837
 Juan Felipe Gil Londoño; Codigo 1626055
 Mateo Gregory Jiemenz; 1629431
 """
-import sys
 from Classes.Node import Node
 from LoadingFiles.LoadMap import searchMap
 from Searches.breadthSolve import *
@@ -14,30 +13,25 @@ from Searches.depthSolve import *
 from Searches.iterativeDepthSolve import *
 
 if __name__ == '__main__':
-    try:
-        level = sys.argv[1]
-        print(level)
-    except:
-        sys.exit("por favor ingrese el correcto path de un nivel")
 
-    map, playerPosition, boxes = searchMap(level)
+    map, playerPosition, boxes = searchMap()
+    Max_tree_depth = 64
+    node = Node(playerPosition, boxes, None, None, 0)
 
-    node = Node(playerPosition, boxes, None, None)
+    breadthSolution = breadthSolveIterative(map, node, Max_tree_depth)
+    breadthSolutionString = ""
+    for decision in breadthSolution:
+        breadthSolutionString = breadthSolutionString + decision
+    print (breadthSolutionString)
 
-    solution = depthSolveIterative(map, node)
-    solutionString = ""
-    for decision in solution:
-        solutionString = solutionString + decision
-    print (solutionString)
+    depthSolution = depthSolveIterative(map, node, Max_tree_depth)
+    depthSolutionString = ""
+    for decision in depthSolution:
+        depthSolutionString = depthSolutionString + decision
+    print (depthSolutionString)
 
-    solution = breadthSolveIterative(map, node)
-    solutionString = ""
-    for decision in solution:
-        solutionString = solutionString + decision
-    print (solutionString)
-    
-    solution = iterativeDepthSolveIterative(map, node)
-    solutionString = ""
-    for decision in solution:
-        solutionString = solutionString + decision
-    print (solutionString)
+    iterativeDepthSolution = iterativeDepthSolveIterative(map, node, Max_tree_depth)
+    iterativeDepthSolutionString = ""
+    for decision in iterativeDepthSolution:
+        iterativeDepthSolutionString = iterativeDepthSolutionString + decision
+    print (iterativeDepthSolutionString)
