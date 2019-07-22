@@ -71,13 +71,13 @@ class Node:
             actual = actual.father
         for decision in reversed(path):
             if decision == [-1,0]:
-                movePath.append('Arriba')
+                movePath.append('U')
             if decision == [0, 1]:
-                movePath.append('Derecha')
+                movePath.append('R')
             if decision == [1, 0]:
-                movePath.append('Abajo')
+                movePath.append('D')
             if decision == [0, -1]:
-                movePath.append('Izquierda')
+                movePath.append('L')
         return movePath
 
     def findCicle(self):
@@ -91,9 +91,16 @@ class Node:
                 fatherNode = fatherNode.father
         return False
 
+    def findDepth(self):
+        depth = 0
+        fatherNode = self.father
+        while (fatherNode != None):
+            depth = depth + 1
+            fatherNode = fatherNode.father
+        return depth
+
     def victory(self, map):
         for box in self.boxesPositions:
             if map[box[0]][box[1]].lower() != 'x':
                 return False
-        print("posicinoes de las cajas",self.boxesPositions)
         return True

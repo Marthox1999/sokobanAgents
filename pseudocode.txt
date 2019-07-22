@@ -36,3 +36,8 @@ procedure DFS-iterative(G,v):
             label v as discovered
             for all edges from v to w in G.adjacentEdges(v) do
                 S.push(w)
+
+###############################################################################
+###############################################################################
+
+Iterative Depth first search

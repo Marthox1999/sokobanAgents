@@ -1,11 +1,6 @@
 
-def searchMap():
-    global fileName
-    print("\n Seleccione el nivel de zokoban")
-    print("para los niveles locales ingrese 'Levels/%nivel%'")
+def searchMap(fileName):
 
-    fileName = input("ingrese el path: ")
-    print(fileName)
     boxes = []
     sokobanMap = open(fileName,"r")
     map = sokobanMap.readlines()
