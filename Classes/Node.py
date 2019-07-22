@@ -12,8 +12,15 @@ class Node:
         boxesPositions = copy.deepcopy(self.boxesPositions)
 
         moves = [[-1, 0], [0, 1], [1, 0], [0, -1]]
+        corners = [
+                    [[-1, 0], [0, 1]],
+                    [[1, 0], [0, 1]],
+                    [[-1, 0], [0, -1]],
+                    [[1, 0], [0, -1]]
+                    ]
         posibleStates = []
 
+        #Verify the posible moves and states and only return the posible states
         for move in moves:
             canMove = True
             newBoxesPositions = boxesPositions[:]
@@ -27,9 +34,19 @@ class Node:
                     newBoxPosition = [box[0] + move[0], box[1] + move[1]]
                     if map[newBoxPosition[0]][newBoxPosition[1]].lower() == 'w':
                         canMove = False
+                        continue
                     if newBoxPosition in newBoxesPositions:
                         canMove = False
-
+                        continue
+                    #Check if the box will be stucked in a corner and, if that corner isnt a global
+                    #didnt expand the node
+                    if map[newPosition[0]][newPosition[1]].lower() != 'x':
+                        for corner in corners:
+                            cornerBox_1 = [newBoxPosition[0] + corner[0][0], newBoxPosition[1] + corner[0][1]]
+                            cornerBox_2 = [newBoxPosition[0] + corner[1][0], newBoxPosition[1] + corner[1][1]]
+                            if map[cornerBox_1[0]][cornerBox_1[1]].lower() == 'w' and map[cornerBox_2[0]][cornerBox_2[1]].lower() == 'w':
+                                canMove = False
+                                continue
                     del newBoxesPositions[index]
                     newBoxesPositions.insert(index, newBoxPosition)
 
